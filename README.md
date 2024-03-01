@@ -91,7 +91,7 @@ export default {
   },
   fetchSocialMediaInfo: {
     requires: ['authedUser'],
-    returns: 'socialMediaData',
+    returns: ['socialMediaData'],
     do: (user) => socials.fetchInfo(user),
     cantDo: () => throw new Error(`User must be authed`),
   },
