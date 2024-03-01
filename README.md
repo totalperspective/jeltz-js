@@ -33,7 +33,8 @@ Different services,
 varied documentation styles,
 and inconsistent interfaces create a complex web that developers must navigate.
 
-And most of the time wer're just flowing the return from one function to the argments of the next
+And most of the time we're just flowing the return from one function to the argments of the next:
+
 ```javascript
 // Traditional Approach
 const user = db.fetchUser(userId)
@@ -76,6 +77,7 @@ It allows you to define and compose APIs using a spoecificaton,
 providing a structured and efficient way to interact with different services.
 
 ```javascript
+import jeltz from 'jeltz'
 // userAPI.jeltz.js
 export default {
   fetchUserFromDatabase: {
@@ -87,7 +89,7 @@ export default {
     requires: ['user'],
     returns: ['authedUser', false],
     do: (user, token) => auth.authenticateUser(user, token) && user,
-    cantDo: () => false
+    cantDo: () => jeltz.done(null)
   },
   fetchSocialMediaInfo: {
     requires: ['authedUser'],
