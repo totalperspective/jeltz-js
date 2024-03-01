@@ -39,10 +39,11 @@ And most of the time wer're just flowing the return from one function to the arg
 const user = db.fetchUser(userId)
 if (user) {
   const isAuthed = auth.authenticateUser(user, token)
-  if (isAuthed) {
-    const socialMediaInfo = socials.fetchInfo(user) || {}
-    // ...
+  if (!isAuthed) {
+    throw new Error(`User must be authed`)
   }
+  const socialMediaInfo = socials.fetchInfo(user) || {}
+  // ...
 }
 ```
 
