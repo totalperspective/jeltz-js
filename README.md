@@ -77,7 +77,6 @@ It allows you to define and compose APIs using a spoecificaton,
 providing a structured and efficient way to interact with different services.
 
 ```javascript
-import jeltz from 'jeltz'
 // userAPI.jeltz.js
 export default {
   fetchUserFromDatabase: {
@@ -89,7 +88,7 @@ export default {
     requires: ['user'],
     returns: ['authedUser', false],
     do: (user, token) => auth.authenticateUser(user, token) && user,
-    cantDo: () => jeltz.done(null)
+    cantDo: () => false
   },
   fetchSocialMediaInfo: {
     requires: ['authedUser'],
@@ -116,6 +115,7 @@ const fluent = jeltz.build(userApi)
 const fluentUser = fluent
   .fetchUserFromDatabase(userId)
   .authenticateUser(token)
+  .orVal(jeltz.done(null))
   .fetchSocialMediaInfo()
   .orVal({})
   .execute();
