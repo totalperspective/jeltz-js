@@ -94,8 +94,10 @@ export default {
     returns: 'socialMediaData',
     do: (user) => socials.fetchInfo(user),
     cantDo: () => throw new Error(`User must be authed`),
-    couldntDo: () => {}
   },
+  orVal: {
+    do: (val, orVal) => val || orVal
+  }
 }
 ```
 
@@ -111,8 +113,9 @@ import userAPI from './userAPI.jeltz.js'
 const fluent = jeltz.build(userApi)
 const fluentUser = fluent
   .fetchUserFromDatabase(userId)
-  .authenticateUser()
+  .authenticateUser(token)
   .fetchSocialMediaInfo()
+  .orVal({})
   .execute();
 ```
 
